@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .arc text {
+            font: 12px sans-serif;
+            text-anchor: middle;
+        }
+
+        .arc path {
+            stroke: #fff;
+        }
+
+    </style>
+</head>
+<body>
+<svg width="1200" height="800"></svg>
+</body>
+<script src="https://d3js.org/d3-selection.v1.min.js"></script>
+<script src="https://d3js.org/d3-path.v1.min.js"></script>
+<script src="https://d3js.org/d3-shape.v1.min.js"></script>
+
+<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+<script>
+
+var data = [
+    {"browser": "AAA", "percent": 20, "color": "#4daf4a", "size": 80},
+    {"browser": "BBB", "percent": 20, "color": "#377eb8", "size": 70},
+    {"browser": "CCC", "percent": 20, "color": "#e41a1c", "size": 60},
+    {"browser": "DDD", "percent": 20, "color": "#984ea3", "size": 50},
+    {"browser": "ETC", "percent": 20, "color": "#ff7f00", "size": 0}
+]
+
+var svg = d3.select("svg"),
+    width = svg.attr("width"),
+    height = svg.attr("height"),
+    radius = Math.min(width, height) / 2,
+    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    var pie = d3.pie().value(function(d) {
+        return d.percent;
+    });
+
+    var path = d3.arc()
+        .innerRadius(function(d){
+            return radius - (radius * 0.5 - d.data.size)
+        })
+        .outerRadius(0)
+        .cornerRadius(4)
+
+    var label = d3.arc()
+        .outerRadius(radius)
+        .innerRadius(radius - 70);
+
+
+    var arc = g.selectAll(".arc")
+        .data(pie(data))
+        .enter().append("g")
+        .attr("class", "arc");
+
+    arc.append("path")
+        .attr("d", path)
+        .attr("fill", function(d) {
+            return d.data.color;
+        });
+
+    arc.append("text")
+        .attr("transform", function(d) {
+            return "translate(" + label.centroid(d) + ")";
+        })
+        .text(function(d) { return d.data.browser; });
+
+
+</script>
+</html>
