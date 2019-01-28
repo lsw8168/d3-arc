@@ -28,11 +28,11 @@
 <script>
 
 var data = [
-    {"browser": "AAA", "percent": 20, "color": "#4daf4a", "size": 80},
-    {"browser": "BBB", "percent": 20, "color": "#377eb8", "size": 70},
-    {"browser": "CCC", "percent": 20, "color": "#e41a1c", "size": 60},
-    {"browser": "DDD", "percent": 20, "color": "#984ea3", "size": 50},
-    {"browser": "ETC", "percent": 20, "color": "#ff7f00", "size": 0}
+    {"type": "AAA", "percent": 20, "color": "#4daf4a", "size": 80},
+    {"type": "BBB", "percent": 20, "color": "#377eb8", "size": 70},
+    {"type": "CCC", "percent": 20, "color": "#e41a1c", "size": 60},
+    {"type": "DDD", "percent": 20, "color": "#984ea3", "size": 50},
+    {"type": "ETC", "percent": 20, "color": "#ff7f00", "size": 0}
 ]
 
 var svg = d3.select("svg"),
@@ -72,7 +72,7 @@ var svg = d3.select("svg"),
         .attr("transform", function(d) {
             return "translate(" + label.centroid(d) + ")";
         })
-        .text(function(d) { return d.data.browser; });
+        .text(function(d) { return d.data.type; });
 
 
 </script>
